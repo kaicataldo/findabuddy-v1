@@ -1,11 +1,12 @@
 var request = require('request'),
-    twitter_update_with_media = require('./twitter_update_with_media');
+    twitter_update_with_media = require('./twitter_update_with_media'),
+    config = require('./config');
  
 var tuwm = new twitter_update_with_media({
-  consumer_key: 'cXepHhzKviY0EN4lUYS9gVp2Z',
-  consumer_secret: 'Hm21dp9xQrCo7JfJ1kHvQT8v1yFQO2eZpbxU0geTjbQzAhWpOD',
-  token: '2789586862-sIVGU2GNXyRlwBOByLKTvgHZXeLA8SqbHGC2mbt',
-  token_secret: '8essmESqBGAZyrLmA502uIR9JuRLcgktLrbsbECI5Pq2f',
+  consumer_key: config.consumer_key,
+  consumer_secret: config.consumer_secret,
+  token: config.token,
+  token_secret: config.token_secret,
 });
 
 var offset;
