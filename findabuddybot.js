@@ -1,10 +1,11 @@
-var twitterAPI = require('node-twitter-api'),
-    request = require('request');
-
-var twitter = new twitterAPI({
-    consumerKey: 'cXepHhzKviY0EN4lUYS9gVp2Z',
-    consumerSecret: 'Hm21dp9xQrCo7JfJ1kHvQT8v1yFQO2eZpbxU0geTjbQzAhWpOD',
-    callback: 'http://localhost:8080'
+var request = require('request'),
+    twitter_update_with_media = require('./twitter_update_with_media');
+ 
+var tuwm = new twitter_update_with_media({
+  consumer_key: 'cXepHhzKviY0EN4lUYS9gVp2Z',
+  consumer_secret: 'Hm21dp9xQrCo7JfJ1kHvQT8v1yFQO2eZpbxU0geTjbQzAhWpOD',
+  token: '2789586862-sIVGU2GNXyRlwBOByLKTvgHZXeLA8SqbHGC2mbt',
+  token_secret: '8essmESqBGAZyrLmA502uIR9JuRLcgktLrbsbECI5Pq2f',
 });
 
 var offset;
@@ -40,32 +41,22 @@ var getRequest = function() {
       buddyTweet = startPhrase + endPhrase + " - " + id;
       pickPic(picArray);
       console.log(picture);
-      postTweet();
+      postTweet(buddyTweet, picture);
     }
     else {
       console.log('Error!');
     }
   });
 };
-
-function postTweet() {
-  twitter.statuses("update_with_media", {
-        media: [
-          picture,
-        ],
-        status: buddyTweet
-      },
-      '2789586862-sIVGU2GNXyRlwBOByLKTvgHZXeLA8SqbHGC2mbt',
-      '8essmESqBGAZyrLmA502uIR9JuRLcgktLrbsbECI5Pq2f',
-      function(error, data, response) {
-          if (error) {
-              console.log(response);
-          } else {
-           console.log("Success!");
-          }
-      }
-  );
-}
+ 
+var postTweet = function(tweetText, tweetPic) {
+tuwm.post(tweetText, tweetPic, function(err, response) {
+  if (err) {
+    console.log(err);
+  }
+  console.log(response);
+});
+};
 
 function pickPic(photos) {
   photo = 0;
@@ -75,15 +66,9 @@ function pickPic(photos) {
         getRequest();
       }
       // set the URL equal to the (new?) photo's URL
-      picture = "\"" + photos[photo].$t + "\"";
+      picture = photos[photo].$t;
   }
 }
-
-/*setInterval(function() {
-  bot.tweet(dogTweet, function (err, reply) {
-    if(err) return handleError(err);
-  });
-}, 3600000);*/
 
 function link(idNumber) {
  return "https://www.petfinder.com/petdetail/" + idNumber + "/";
