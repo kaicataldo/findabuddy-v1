@@ -37,11 +37,11 @@ var getRequest = function() {
       breed = dogData.breeds.breed.$t ? dogData.breeds.breed.$t : 'doggie';
       mix = mix(dogData.mix.$t);
       id = link(dogData.id.$t);
-      startPhrase = name + " is a " + sex + " " + breed + mix;
-      endPhrase = endOfSentence();
-      buddyTweet = startPhrase + endPhrase + " - " + id;
+
       pickPic(picArray);
-      console.log(picture);
+      buddyTweet = oneOrTwo(name, id);
+      console.log(buddyTweet + " || " + picture);
+      
       postTweet(buddyTweet, picture);
     }
     else {
@@ -59,12 +59,24 @@ tuwm.post(tweetText, tweetPic, function(err, response) {
 });
 };
 
+function oneOrTwo(name, id) {
+  if (name.indexOf('&') >= 0 || name.indexOf('and') >= 0) { 
+    startPhrase = name + " are doggies";
+  }
+  else { 
+    startPhrase = name + " is a " + sex + " " + breed + mix;
+  }
+  endPhrase = endOfSentence();
+  buddyTweet = startPhrase + endPhrase + " " + id;
+  return buddyTweet;
+}
+
 function pickPic(photos) {
   photo = 0;
   while ( photos[photo]['@size'] !== 'x' ) {
       photo++;
       if ( photo === photos.length ) { 
-        getRequest();
+        picture = '';
       }
       picture = photos[photo].$t;
   }
@@ -75,10 +87,18 @@ function link(idNumber) {
 }
 
 function endOfSentence() {
-  var phrases = [' who needs a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who needs a new best friend!', ' who needs a place to call home!', ' looking for a forever home!', ' who wants to be your buddy!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who needs some lovin\'!', ' who could be your new buddy!'];
+  var phrases; 
+
+  if (name.indexOf('&') >= 0) { 
+    phrases = [' who need a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who need a new best friend!', ' who need a place to call home!', ' looking for a forever home!', ' who want to be your buddies!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who need some lovin\'!', ' who could be your new buddies!'];
+  } 
+  else {
+    phrases = [' who needs a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who needs a new best friend!', ' who needs a place to call home!', ' looking for a forever home!', ' who wants to be your buddy!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who needs some lovin\'!', ' who could be your new buddy!'];
+  }  
   endPhrase = phrases[Math.floor(Math.random() * phrases.length)];
   return endPhrase;
 }
+
 
 function sex(whichSex) {
   if (whichSex === 'F') {
