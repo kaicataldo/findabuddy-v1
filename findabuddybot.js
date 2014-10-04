@@ -2,8 +2,8 @@ var twitterAPI = require('node-twitter-api'),
     request = require('request');
 
 var twitter = new twitterAPI({
-    consumerKey: 'cXepHhzKviY0EN4lUYS9gVp2Z',
-    consumerSecret: 'Hm21dp9xQrCo7JfJ1kHvQT8v1yFQO2eZpbxU0geTjbQzAhWpOD',
+    consumerKey: CONSUMERKEY,
+    consumerSecret: CONSUMERSECRET,
     callback: 'http://localhost:8080'
 });
 
@@ -45,13 +45,17 @@ request(url, function (error, response, body) {
 
 function postTweet() {
   twitter.statuses("update", {
+        media: [
+          picture,
+          stream
+    ],
           status: buddyTweet
       },
-      '2789586862-sIVGU2GNXyRlwBOByLKTvgHZXeLA8SqbHGC2mbt',
-      '8essmESqBGAZyrLmA502uIR9JuRLcgktLrbsbECI5Pq2f',
+      TOKEN,
+      TOKENSECRET,
       function(error, data, response) {
           if (error) {
-              // something went wrong
+              console.log('Error!');
           } else {
               // data contains the data sent by twitter
           }
@@ -64,6 +68,10 @@ function postTweet() {
     if(err) return handleError(err);
   });
 }, 3600000);*/
+
+function pickPic() {
+
+}
 
 function link(idNumber) {
  return "https://www.petfinder.com/petdetail/" + idNumber + "/";
