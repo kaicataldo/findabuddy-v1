@@ -1,4 +1,0 @@
-consumerKey: 'cXepHhzKviY0EN4lUYS9gVp2Z',
-consumerSecret: 'Hm21dp9xQrCo7JfJ1kHvQT8v1yFQO2eZpbxU0geTjbQzAhWpOD',
-tokenKey:  '2789586862-sIVGU2GNXyRlwBOByLKTvgHZXeLA8SqbHGC2mbt',
-tokenSecret:  '8essmESqBGAZyrLmA502uIR9JuRLcgktLrbsbECI5Pq2f',
