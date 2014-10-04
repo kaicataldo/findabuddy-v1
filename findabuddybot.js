@@ -65,7 +65,6 @@ function pickPic(photos) {
       if ( photo === photos.length ) { 
         getRequest();
       }
-      // set the URL equal to the (new?) photo's URL
       picture = photos[photo].$t;
   }
 }
