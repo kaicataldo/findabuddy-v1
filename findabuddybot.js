@@ -40,7 +40,7 @@ var getRequest = function() {
 
       pickPic(picArray);
       buddyTweet = oneOrTwo(name, id);
-      console.log(buddyTweet + " || " + picture);
+      
       
       postTweet(buddyTweet, picture);
     }
@@ -55,7 +55,7 @@ tuwm.post(tweetText, tweetPic, function(err, response) {
   if (err) {
     console.log(err);
   }
-  console.log(response);
+  console.log(buddyTweet + " || " + picture);
 });
 };
 
