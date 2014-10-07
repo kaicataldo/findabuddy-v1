@@ -38,21 +38,22 @@ var getRequest = function() {
       parsedData = JSON.parse(body);
       dogData = parsedData.petfinder.pets.pet;
       
-      breed = dogData.breeds.breed;
       name = dogData.name.$t;
       sex = sex(dogData.sex.$t);
       mix = mix(dogData.mix.$t);
       id = link(dogData.id.$t);
-      breed = pickBreed(breed);
+      breed = pickBreed(dogData.breeds.breed);
       buddyTweet = oneOrTwo(name, id);
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
         postTweetText(buddyTweet);
+        //console.log(buddyTweet);
       }
       else {
         picArray = dogData.media.photos.photo;
         pickPic(picArray);
         postTweetPic(buddyTweet, picture);
+        //console.log(buddyTweet + " || " + picture);
       }
       console.log(url);
     }
@@ -136,14 +137,11 @@ function oneOrTwo(name, id) {
 function pickPic(photos) {
   photo = 0;
   while (photos[photo]['@size'] !== 'x') {
-      photo++;
-      if (photo === photos.length) { 
-        picture = '';
-      }
-      if (photo === undefined) {
-        getRequest();
-      }
-      picture = photos[photo].$t;
+    photo++;
+    if (photo === photos.length) {
+      getRequest();
+    }
+  picture = photos[photo].$t;
   }
 }
 
