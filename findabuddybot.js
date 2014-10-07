@@ -1,5 +1,6 @@
 var request = require('request'),
     twitter_update_with_media = require('./twitter_update_with_media'),
+    twitterAPI = require('node-twitter-api'),
     config = require('./config');
  
 var tuwm = new twitter_update_with_media({
@@ -7,6 +8,12 @@ var tuwm = new twitter_update_with_media({
   consumer_secret: config.consumer_secret,
   token: config.token,
   token_secret: config.token_secret,
+});
+
+var twitter = new twitterAPI({
+    consumerKey: config.consumer_key,
+    consumerSecret: config.consumer_secret,
+    callback: ''
 });
 
 var offset;
@@ -25,24 +32,28 @@ var buddyTweet;
 var getRequest = function() {
   randomizer();
   var url = 'http://api.petfinder.com/pet.find?key=a6c914ff39bbb7d1cc3c0ead2efa3494&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
-  
+
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       parsedData = JSON.parse(body);
       dogData = parsedData.petfinder.pets.pet;
-      picArray = dogData.media.photos.photo;
+      
       breed = dogData.breeds.breed;
       name = dogData.name.$t;
       sex = sex(dogData.sex.$t);
       mix = mix(dogData.mix.$t);
       id = link(dogData.id.$t);
-
-      pickPic(picArray);
       breed = pickBreed(breed);
       buddyTweet = oneOrTwo(name, id);
-      
-      postTweet(buddyTweet, picture);
-      //console.log(dogData);
+
+      if (Object.getOwnPropertyNames(dogData.media).length === 0) {
+        postTweetText(buddyTweet);
+      }
+      else {
+        picArray = dogData.media.photos.photo;
+        pickPic(picArray);
+        postTweetPic(buddyTweet, picture);
+      }
       console.log(url);
     }
     else {
@@ -51,7 +62,7 @@ var getRequest = function() {
   });
 };
  
-var postTweet = function(tweetText, tweetPic) {
+var postTweetPic = function(tweetText, tweetPic) {
 tuwm.post(tweetText, tweetPic, function(err, response) {
   if (err) {
     console.log(err);
@@ -60,6 +71,21 @@ tuwm.post(tweetText, tweetPic, function(err, response) {
 });
 };
 
+var postTweetText = function(tweetText) {
+  twitter.statuses("update", {
+        status: tweetText
+    },
+    config.token,
+    config.token_secret,
+    function(error, data, response) {
+        if (error) {
+            console.log(error);
+        } 
+        else {
+            console.log(buddyTweet);
+        }
+    });
+};
 
 function pickBreed(breed) {
   var singleBreed = true;
@@ -89,7 +115,7 @@ function oneOrTwo(name, id) {
   var oneDoggie;
 
   if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
-    if (name.indexOf('-') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1){
+    if (name.indexOf('-') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
       oneDoggie = true;
       startPhrase = name + " is a " + sex + " " + breed + mix;
     }

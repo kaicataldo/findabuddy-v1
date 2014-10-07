@@ -7,7 +7,8 @@
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
   "main": "findabuddybot",
   "dependencies": {
-    "request": "^2.44.0"
+    "request": "^2.44.0",
+    "node-twitter-api": "^1.4.0"
   },
   "repository": {
     "type": "git",
