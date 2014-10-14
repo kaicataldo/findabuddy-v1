@@ -30,8 +30,9 @@ var endPhrase;
 var buddyTweet;
 
 var getRequest = function() {
+  var petFinderKey = config.petfinder_key;
   randomizer();
-  var url = 'http://api.petfinder.com/pet.find?key=a6c914ff39bbb7d1cc3c0ead2efa3494&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
+  var url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
 
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -47,14 +48,14 @@ var getRequest = function() {
       buddyTweet = oneOrTwo(name, id);
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
-        //postTweetText(buddyTweet);
-        console.log(buddyTweet);
+        postTweetText(buddyTweet);
+        //console.log(buddyTweet);
       }
       else {
         picArray = dogData.media.photos.photo;
         pickPic(picArray);
-        //postTweetPic(buddyTweet, picture);
-        console.log(buddyTweet + " || " + picture);
+        postTweetPic(buddyTweet, picture);
+        //console.log(buddyTweet + " || " + picture);
       }
       console.log(url);
     }
@@ -90,18 +91,14 @@ var postTweetText = function(tweetText) {
 };
 
 function formatName(petName) {
-
-  if(petName.match(/coutesy|courtesy|listing|posting|post|zzz|[0-9]/gi) !== null && petName.match(/[(]|[)]|-|–|—|[*]/gi) === null) {
-    petName = petName.replace(/coutesy|courtesy|listing|posting|post|zzz|[0-9]/gi, '');
+  if (petName.match(/coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
+    petName = petName.replace(/coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi, '');
   }
-  else if(petName.match(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]/gi) !== null && petName.match(/\/|[(]|[)]|-|–|—|[*]/gi) !== null) {
-    petName = petName.replace(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|\/|[(]|[)]|-|–|—|[*]/gi, '');
+  else if (petName.match(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) !== null) {
+    petName = petName.replace(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#|\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
   }
-  petName = petName.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  petName = petName.replace(/ And /gi, function(i) { return i.toLowerCase(); });
-  petName = petName.replace(/ Or /gi, function(j) { return j.toLowerCase(); });
-  petName = petName.replace(/ Asap/gi, function(k) { return k.toUpperCase(); });
-  return petName.replace(/\s+/g,' ').trim();
+  petName = petName.replace(/\s+/g,' ').trim();
+  return petName;
 }
 
 function pickBreed(breed) {
