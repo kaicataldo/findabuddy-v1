@@ -18,7 +18,7 @@ var twitter = new twitterAPI({
 
 var offset;
 var dogData;
-var name;
+var nameData;
 var sex;
 var breed;
 var mix;
@@ -37,8 +37,9 @@ var getRequest = function() {
     if (!error && response.statusCode == 200) {
       parsedData = JSON.parse(body);
       dogData = parsedData.petfinder.pets.pet;
+      nameData = dogData.name.$t;
       
-      name = dogData.name.$t;
+      name = formatName(nameData);
       sex = sex(dogData.sex.$t);
       mix = mix(dogData.mix.$t);
       id = link(dogData.id.$t);
@@ -46,14 +47,14 @@ var getRequest = function() {
       buddyTweet = oneOrTwo(name, id);
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
-        postTweetText(buddyTweet);
-        //console.log(buddyTweet);
+        //postTweetText(buddyTweet);
+        console.log(buddyTweet);
       }
       else {
         picArray = dogData.media.photos.photo;
         pickPic(picArray);
-        postTweetPic(buddyTweet, picture);
-        //console.log(buddyTweet + " || " + picture);
+        //postTweetPic(buddyTweet, picture);
+        console.log(buddyTweet + " || " + picture);
       }
       console.log(url);
     }
@@ -88,6 +89,21 @@ var postTweetText = function(tweetText) {
     });
 };
 
+function formatName(petName) {
+
+  if(petName.match(/coutesy|courtesy|listing|posting|post|zzz|[0-9]/gi) !== null && petName.match(/[(]|[)]|-|–|—|[*]/gi) === null) {
+    petName = petName.replace(/coutesy|courtesy|listing|posting|post|zzz|[0-9]/gi, '');
+  }
+  else if(petName.match(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]/gi) !== null && petName.match(/\/|[(]|[)]|-|–|—|[*]/gi) !== null) {
+    petName = petName.replace(/coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|\/|[(]|[)]|-|–|—|[*]/gi, '');
+  }
+  petName = petName.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  petName = petName.replace(/ And /gi, function(i) { return i.toLowerCase(); });
+  petName = petName.replace(/ Or /gi, function(j) { return j.toLowerCase(); });
+  petName = petName.replace(/ Asap/gi, function(k) { return k.toUpperCase(); });
+  return petName.replace(/\s+/g,' ').trim();
+}
+
 function pickBreed(breed) {
   var singleBreed = true;
     
@@ -97,7 +113,7 @@ function pickBreed(breed) {
     
     for (var i = 0; i < breed.length; i++) {
       
-      if (i === breed.length - 1) {
+      if(i === breed.length - 1) {
         breedString += breed[i].$t;
       } else {
         breedString += breed[i].$t + '/';
