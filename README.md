@@ -19,6 +19,9 @@ To change the geographic region the app searches simply replace the location par
 
 var url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=***new%20york%20ny***&count=1&offset=' + offset + '&output=full&format=json';
 
+Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command at whatever interval you specify. Do be careful with this - Twitter has very specific guidelines as to what consitutes spam! Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.)
+
+Thanks for your interest!
     
           ,:'/  _ ..._
          // ( `""-.._.'
