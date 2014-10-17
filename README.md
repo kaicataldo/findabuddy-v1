@@ -27,4 +27,4 @@ var url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog
          |            /
          \_       .--'       ASCII Art Gallery
          (_'---'`)           http://www.ascii-art.com
-    jgs  / `'---`()
+    jgs / `'---`()
