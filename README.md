@@ -3,7 +3,7 @@ Find-A-Buddy NYC
 
 
 
-This app finds dogs in the NYC area, but could very easily be implemented in another city. To create your own Find-A-Buddy Twitter Bot, all you need is your own Petfinder <a href="https://www.petfinder.com/developers/api-key">API key</a>, your own <a href="https://apps.twitter.com/">Twitter app auth credentials</a>, and then to host the bot somewhere (I used <a href="www.heroku.com">Heroku</a>).
+This app finds dogs in the NYC area, but could very easily be implemented in another city. To create your own Find-A-Buddy Twitter Bot, all you need is your own Petfinder <a href="https://www.petfinder.com/developers/api-key">API key</a>, your own <a href="https://apps.twitter.com/">Twitter app auth credentials</a>, and then to host the bot somewhere (I used <a href="http://www.heroku.com">Heroku</a>).
 
 To plug the keys into your bot, create a file called config.js in the root directory (same directory as findabuddybot.js), and store your own keys in this format:
 
