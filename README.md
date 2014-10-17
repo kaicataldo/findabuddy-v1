@@ -21,7 +21,7 @@ To change the geographic region the app searches simply replace the location par
 
 Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam! Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.)
 
-This project is dedicated to Henri. Adopt, don't buy!
+This project is dedicated to Henri. Remember – adopt, don't buy!
     
           ,:'/  _ ..._
          // ( `""-.._.'
