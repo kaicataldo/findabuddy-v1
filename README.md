@@ -7,13 +7,13 @@ This app finds dogs in the NYC area, but could very easily be implemented in ano
 
 To plug the keys into your bot, create a file called config.js in the root directory (same directory as findabuddybot.js), and store your own keys in this format:
 
-module.exports = {
-     consumer_key: ' ',
-  consumer_secret: ' ',
-            token: ' ',
-     token_secret: ' ',
-    petfinder_key: ' '
-};
+     module.exports = {
+          consumer_key: ' ',
+       consumer_secret: ' ',
+                 token: ' ',
+          token_secret: ' ',
+         petfinder_key: ' '
+     };
 
 To change the geographic region the app searches simply replace the location parameter (in this case, new%20york%20ny, but I believe it also accepts ZIP codes!) with another location in the Petfinder url in findabuddybot.js:
 
