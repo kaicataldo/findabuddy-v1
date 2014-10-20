@@ -97,7 +97,14 @@ function formatName(petName) {
   else if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) !== null) {
     petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#|\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
   }
+  petName = petName.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  petName = petName.replace(/ And /gi, function(i) { return i.toLowerCase(); });
+  petName = petName.replace(/ Or /gi, function(j) { return j.toLowerCase(); });
+  petName = petName.replace(/ Asap/gi, function(k) { return k.toUpperCase(); });
   petName = petName.replace(/\s+/g,' ').trim();
+  if (petName.length === 2 && petName !== "Al") {
+    petName = petName.toUpperCase();
+  }
   return petName;
 }
 
