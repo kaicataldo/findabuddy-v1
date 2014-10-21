@@ -101,6 +101,7 @@ function formatName(petName) {
   petName = petName.replace(/ And /gi, function(i) { return i.toLowerCase(); });
   petName = petName.replace(/ Or /gi, function(j) { return j.toLowerCase(); });
   petName = petName.replace(/ Asap/gi, function(k) { return k.toUpperCase(); });
+  petName = petName.replace(/ Aka /gi, function(l) { return l.toUpperCase(); });
   petName = petName.replace(/\s+/g,' ').trim();
   if (petName.length === 2 && petName !== "Al") {
     petName = petName.toUpperCase();
