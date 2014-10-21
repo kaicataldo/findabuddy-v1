@@ -57,7 +57,6 @@ var getRequest = function() {
         postTweetPic(buddyTweet, picture);
         //console.log(buddyTweet + " || " + picture);
       }
-      console.log(url);
     }
     else {
       console.log('Error!');
@@ -66,12 +65,12 @@ var getRequest = function() {
 };
  
 var postTweetPic = function(tweetText, tweetPic) {
-tuwm.post(tweetText, tweetPic, function(err, response) {
-  if (err) {
-    console.log(err);
-  }
-  console.log(buddyTweet + " || " + picture);
-});
+  tuwm.post(tweetText, tweetPic, function(err, response) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(buddyTweet + " || " + picture);
+  });
 };
 
 var postTweetText = function(tweetText) {
@@ -203,7 +202,6 @@ function mix(isMix) {
 
 function randomizer() {
   offset = Math.round(Math.random() * 1999);
-  console.log(offset);
 }
 
 getRequest();
