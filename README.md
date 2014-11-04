@@ -1,7 +1,14 @@
 Find-A-Buddy NYC
 ==========
 
-
+          ,:'/  _ ..._         ______ _           _          ____            _     _       
+         // ( `""-.._.'       |  ____(_)         | |   /\   |  _ \          | |   | |      
+         \| /    6\___        | |__   _ _ __   __| |  /  \  | |_) |_   _  __| | __| |_   _ 
+         |     6      4       |  __| | | '_ \ / _` | / /\ \ |  _ <| | | |/ _` |/ _` | | | |
+         |            /       | |    | | | | | (_| |/ ____ \| |_) | |_| | (_| | (_| | |_| |
+         \_       .--'        |_|    |_|_| |_|\__,_/_/    \_\____/ \__,_|\__,_|\__,_|\__, |
+         (_'---'`)                                                                    __/ |
+        / `'---`()                                                                   |___/ 
 
 This app finds dogs in the NYC area, but could very easily be implemented in another city. To create your own Find-A-Buddy Twitterbot, all you need is your own Petfinder <a href="https://www.petfinder.com/developers/api-key">API key</a>, your own <a href="https://apps.twitter.com/">Twitter app auth credentials</a>, and a host (I used <a href="http://www.heroku.com">Heroku</a>).
 
@@ -23,11 +30,3 @@ Lastly, you'll need to find something that runs the script at a regular interval
 
 This project is dedicated to Henri, who reminds you to please adopt instead of buying!
     
-          ,:'/  _ ..._
-         // ( `""-.._.'
-         \| /    6\___
-         |     6      4 
-         |            /
-         \_       .--'
-         (_'---'`)
-        / `'---`()
