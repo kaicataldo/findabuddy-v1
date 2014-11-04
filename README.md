@@ -15,19 +15,19 @@ To plug the keys into your bot, create a file called config.js in the root direc
          petfinder_key: ' '
      };
 
-To change the geographic region the app searches simply replace the location parameter (in this case, new%20york%20ny, but I believe it also accepts ZIP codes!) with another location in the Petfinder URL in findabuddybot.js:
+To change the geographic region the app searches simply replace the location parameter (in this case, new%20york%20ny, but I believe it also accepts ZIP codes) with another location in the Petfinder URL in findabuddybot.js:
 
      var url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
 
-Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam! Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.)
+Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam. Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.
 
-This project is dedicated to Henri. Adopt, don't buy!
+This project is dedicated to Henri, who reminds you to please adopt instead of buying!
     
           ,:'/  _ ..._
          // ( `""-.._.'
-         \| /    6\___  
-         |     6      4      
+         \| /    6\___
+         |     6      4 
          |            /
-         \_       .--'       ASCII Art Gallery
-         (_'---'`)           http://www.ascii-art.com
-    jgs / `'---`()
+         \_       .--'
+         (_'---'`)
+        / `'---`()
