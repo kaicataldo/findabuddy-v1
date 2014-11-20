@@ -136,7 +136,7 @@ function oneOrTwo(name, id) {
   var oneDoggie;
 
   if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
-    if (name.indexOf('-') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
+    if (name.indexOf('-') > -1 || name.indexOf('~') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
       oneDoggie = true;
       startPhrase = name + " is a " + sex + " " + breed + mix;
     }
