@@ -1,7 +1,7 @@
 var request = require('request'),
-twitter_update_with_media = require('./twitter_update_with_media'),
-twitterAPI = require('node-twitter-api'),
-config = require('./config');
+    twitter_update_with_media = require('./twitter_update_with_media'),
+    twitterAPI = require('node-twitter-api'),
+    config = require('./config');
 
 var tuwm = new twitter_update_with_media({
   consumer_key: config.consumer_key,
