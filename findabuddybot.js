@@ -105,7 +105,7 @@ function formatName(petName) {
   petName = petName.replace(/ Bff /gi, " BFF ");
   petName = petName.replace(/ Bffs /gi, " BFFs ");
   petName = petName.replace(/\s+/g,' ').trim();
-  if (petName.length === 2 && petName !== "Al") {
+  if (petName.length === 2 && petName !== "Al" && petName !== "Bo") {
     petName = petName.toUpperCase();
   }
   return petName;
