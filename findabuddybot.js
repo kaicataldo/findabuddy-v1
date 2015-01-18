@@ -16,7 +16,6 @@ var twitter = new twitterAPI({
   callback: ''
 });
 
-var offset;
 var dogData;
 var nameData;
 var sex;
@@ -30,9 +29,9 @@ var endPhrase;
 var buddyTweet;
 
 var getRequest = function() {
-  var petFinderKey = config.petfinder_key;
-  randomizer();
-  var url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
+  var petFinderKey = config.petfinder_key,
+      offset = Math.round(Math.random() * 1999),
+      url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
 
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -48,14 +47,14 @@ var getRequest = function() {
       buddyTweet = oneOrTwo(name, id);
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
-        postTweetText(buddyTweet);
-        //console.log(buddyTweet);
+        //postTweetText(buddyTweet);
+        console.log(buddyTweet);
       }
       else {
         picArray = dogData.media.photos.photo;
         pickPic(picArray);
-        postTweetPic(buddyTweet, picture);
-        //console.log(buddyTweet + " || " + picture);
+        //postTweetPic(buddyTweet, picture);
+        console.log(buddyTweet + " || " + picture);
       }
     }
     else {
@@ -88,6 +87,41 @@ var postTweetText = function(tweetText) {
     }
   });
 };
+
+function oneOrTwo(name, id) {
+  var oneDoggie;
+
+  if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
+    if (name.indexOf('-') > -1 || name.indexOf('~') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
+      oneDoggie = true;
+      startPhrase = name + " is a " + sex + " " + breed + mix;
+    }
+    else {
+      oneDoggie = false;
+      startPhrase = name + " are doggies";
+    }
+  }
+  else {
+    oneDoggie = true;
+    startPhrase = name + " is a " + sex + " " + breed + mix;
+  }
+  endPhrase = endOfSentence(oneDoggie);
+  buddyTweet = startPhrase + endPhrase + " " + id;
+  return buddyTweet;
+}
+
+function endOfSentence(oneDoggie) {
+  var phrases;
+
+  if (oneDoggie === false) {
+    phrases = [' who need a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who need a new best friend!', ' who need a place to call home!', ' looking for a forever home!', ' who want to be your buddies!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who need some lovin\'!', ' who could be your new buddies!'];
+  }
+  else if (oneDoggie === true) {
+    phrases = [' who needs a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who needs a new best friend!', ' who needs a place to call home!', ' looking for a forever home!', ' who wants to be your buddy!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who needs some lovin\'!', ' who could be your new buddy!'];
+  }
+  endPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+  return endPhrase;
+}
 
 function formatName(petName) {
   if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
@@ -136,28 +170,6 @@ function pickBreed(breed) {
   return breed;
 }
 
-function oneOrTwo(name, id) {
-  var oneDoggie;
-
-  if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
-    if (name.indexOf('-') > -1 || name.indexOf('~') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
-      oneDoggie = true;
-      startPhrase = name + " is a " + sex + " " + breed + mix;
-    }
-    else {
-      oneDoggie = false;
-      startPhrase = name + " are doggies";
-    }
-  }
-  else {
-    oneDoggie = true;
-    startPhrase = name + " is a " + sex + " " + breed + mix;
-  }
-  endPhrase = endOfSentence(oneDoggie);
-  buddyTweet = startPhrase + endPhrase + " " + id;
-  return buddyTweet;
-}
-
 function pickPic(photos) {
   photo = 0;
   while (photos[photo]['@size'] !== 'x') {
@@ -171,19 +183,6 @@ function pickPic(photos) {
 
 function link(idNumber) {
   return "https://www.petfinder.com/petdetail/" + idNumber + "/";
-}
-
-function endOfSentence(oneDoggie) {
-  var phrases;
-
-  if (oneDoggie === false) {
-    phrases = [' who need a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who need a new best friend!', ' who need a place to call home!', ' looking for a forever home!', ' who want to be your buddies!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who need some lovin\'!', ' who could be your new buddies!'];
-  }
-  else if (oneDoggie === true) {
-    phrases = [' who needs a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who needs a new best friend!', ' who needs a place to call home!', ' looking for a forever home!', ' who wants to be your buddy!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who needs some lovin\'!', ' who could be your new buddy!'];
-  }
-  endPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-  return endPhrase;
 }
 
 function sex(whichSex) {
@@ -202,10 +201,6 @@ function mix(isMix) {
   else {
     return "";
   }
-}
-
-function randomizer() {
-  offset = Math.round(Math.random() * 1999);
 }
 
 getRequest();
