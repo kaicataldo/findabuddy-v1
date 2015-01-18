@@ -16,18 +16,6 @@ var twitter = new twitterAPI({
   callback: ''
 });
 
-var dogData;
-var nameData;
-var sex;
-var breed;
-var mix;
-var picArray;
-var picture;
-var id;
-var startPhrase;
-var endPhrase;
-var buddyTweet;
-
 var getRequest = function() {
   var petFinderKey = config.petfinder_key,
       offset = Math.round(Math.random() * 1999),
@@ -35,29 +23,22 @@ var getRequest = function() {
 
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      parsedData = JSON.parse(body);
-      dogData = parsedData.petfinder.pets.pet;
-      nameData = dogData.name.$t;
-
-      name = formatName(nameData);
-      sex = sex(dogData.sex.$t);
-      mix = mix(dogData.mix.$t);
-      id = link(dogData.id.$t);
-      breed = pickBreed(dogData.breeds.breed);
-      buddyTweet = oneOrTwo(name, id);
+      var parsedData = JSON.parse(body),
+          dogData = parsedData.petfinder.pets.pet,
+          oneDoggie,
+          buddyTweet = createTweet(dogData);
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
-        //postTweetText(buddyTweet);
-        console.log(buddyTweet);
+        postTweetText(buddyTweet);
+        //console.log(buddyTweet);
+      } else {
+        var picArray = dogData.media.photos.photo,
+            picture = pickPic(picArray);
+
+        postTweetPic(buddyTweet, picture);
+        //console.log(buddyTweet + " || " + picture);
       }
-      else {
-        picArray = dogData.media.photos.photo;
-        pickPic(picArray);
-        //postTweetPic(buddyTweet, picture);
-        console.log(buddyTweet + " || " + picture);
-      }
-    }
-    else {
+    } else {
       console.log('Error!');
     }
   });
@@ -68,7 +49,7 @@ var postTweetPic = function(tweetText, tweetPic) {
     if (err) {
       console.log(err);
     }
-    console.log(buddyTweet + " || " + picture);
+    console.log(tweetText + " || " + tweetPic);
   });
 };
 
@@ -83,13 +64,24 @@ var postTweetText = function(tweetText) {
       console.log(error);
     }
     else {
-      console.log(buddyTweet);
+      console.log(tweetText);
     }
   });
 };
 
-function oneOrTwo(name, id) {
-  var oneDoggie;
+function createTweet(dogData) {
+  var name = formatName(dogData.name.$t),
+      sex = whichSex(dogData.sex.$t),
+      breed = pickBreed(dogData.breeds.breed),
+      mix = whichMix(dogData.mix.$t, breed),
+      id = link(dogData.id.$t),
+      startPhrase = beginningOfSentence(name, sex, breed, mix),
+      endPhrase = endOfSentence(oneDoggie),
+      returnTweet = startPhrase + endPhrase + " " + id;
+  return returnTweet;
+}
+
+function beginningOfSentence(name, sex, breed, mix) {
 
   if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
     if (name.indexOf('-') > -1 || name.indexOf('~') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
@@ -105,9 +97,7 @@ function oneOrTwo(name, id) {
     oneDoggie = true;
     startPhrase = name + " is a " + sex + " " + breed + mix;
   }
-  endPhrase = endOfSentence(oneDoggie);
-  buddyTweet = startPhrase + endPhrase + " " + id;
-  return buddyTweet;
+  return startPhrase;
 }
 
 function endOfSentence(oneDoggie) {
@@ -177,7 +167,7 @@ function pickPic(photos) {
     if (photo === photos.length) {
       getRequest();
     }
-    picture = photos[photo].$t;
+    return photos[photo].$t;
   }
 }
 
@@ -185,16 +175,16 @@ function link(idNumber) {
   return "https://www.petfinder.com/petdetail/" + idNumber + "/";
 }
 
-function sex(whichSex) {
-  if (whichSex === 'F') {
+function whichSex(sex) {
+  if (sex === 'F') {
     return "female";
   }
-  else if (whichSex === 'M') {
+  else if (sex === 'M') {
     return "male";
   }
 }
 
-function mix(isMix) {
+function whichMix(isMix, breed) {
   if (isMix === 'yes' && breed !== 'doggie') {
     return " mix";
   }
