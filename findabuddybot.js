@@ -171,7 +171,7 @@ function pickBreed(breed) {
 }
 
 function link(idNumber) {
-  return "http://www.petfinder.com/petdetail/" + idNumber + "/";
+  return "http://www.petfinder.com/petdetail/" + idNumber;
 }
 
 function whichSex(sex) {
