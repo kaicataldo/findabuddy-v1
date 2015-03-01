@@ -1,12 +1,14 @@
 {
   "name": "findabuddynyc",
   "version": "1.0.0",
-   "engines": {
-    "node": "0.10.x"
-    },
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
-  "main": "findabuddybot.js",
-  "dependencies": {
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "node findabuddybot.js"
+  },
+ "dependencies": {
     "request": "^2.44.0",
     "node-twitter-api": "^1.4.0"
   },
