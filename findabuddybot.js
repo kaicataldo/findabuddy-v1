@@ -1,14 +1,6 @@
 var request = require('request'),
-    twitter_update_with_media = require('./twitter_update_with_media'),
     twitterAPI = require('node-twitter-api'),
     config = require('./config');
-
-var tuwm = new twitter_update_with_media({
-  consumer_key: config.consumer_key,
-  consumer_secret: config.consumer_secret,
-  token: config.token,
-  token_secret: config.token_secret,
-});
 
 var twitter = new twitterAPI({
   consumerKey: config.consumer_key,
@@ -30,13 +22,13 @@ var getRequest = function() {
 
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
         postTweetText(buddyTweet);
-        //console.log(buddyTweet);
+        console.log(buddyTweet);
       } else {
         var picArray = dogData.media.photos.photo,
             picture = pickPic(picArray);
 
         postTweetPic(buddyTweet, picture);
-        //console.log(buddyTweet + " || " + picture);
+        console.log(buddyTweet + " || " + picture);
       }
     } else {
       console.log('Error!');
@@ -45,26 +37,30 @@ var getRequest = function() {
 };
 
 var postTweetPic = function(tweetText, tweetPic) {
-  tuwm.post(tweetText, tweetPic, function(err, response) {
-    if (err) {
-      console.log(err);
+  twitter.uploadMedia({media: tweetPic},
+  config.token,
+  config.token_secret,
+  function(error, data, response) {
+    if (!error) {
+      console.log(response);
     }
-    console.log(tweetText + " || " + tweetPic);
+    else {
+      console.log(error);
+    }
   });
 };
 
 var postTweetText = function(tweetText) {
-  twitter.statuses("update", {
-    status: tweetText
-  },
+  twitter.statuses("update",
+  { status: tweetText },
   config.token,
   config.token_secret,
   function(error, data, response) {
-    if (error) {
-      console.log(error);
+    if (!error) {
+      console.log(tweetText);
     }
     else {
-      console.log(tweetText);
+      console.log(error);
     }
   });
 };
