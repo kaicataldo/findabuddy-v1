@@ -9,8 +9,9 @@
     "start": "node findabuddybot.js"
   },
   "dependencies": {
-    "node-twitter-api": "^1.6.0",
-    "request": "^2.55.0"
+    "node-base64-image": "0.0.1",
+    "request": "^2.55.0",
+    "twitter": "^1.2.5"
   },
   "repository": {
     "type": "git",

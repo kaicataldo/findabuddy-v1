@@ -1,14 +1,16 @@
 var request = require('request'),
-    twitterAPI = require('node-twitter-api'),
+    Twitter = require('twitter'),
+    base64 = require('node-base64-image'),
     config = require('./config');
 
-var twitter = new twitterAPI({
-  consumerKey: config.consumer_key,
-  consumerSecret: config.consumer_secret,
-  callback: ''
+var client = new Twitter({
+  consumer_key: config.consumer_key,
+  consumer_secret: config.consumer_secret,
+  access_token_key: config.token,
+  access_token_secret: config.token_secret
 });
 
-var getRequest = function() {
+function getRequest() {
   var petFinderKey = config.petfinder_key,
       offset = Math.round(Math.random() * 1999),
       url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
@@ -25,59 +27,58 @@ var getRequest = function() {
         console.log(buddyTweet);
       }
       else {
-        var picture = pickPic(dogData.media.photos.photo);
+        var picUrl = pickPic(dogData.media.photos.photo);
+
+        base64.base64encoder(picUrl, {string: true}, function (error, buddyPic) {
+          if (!error) {
+            postTweetPic(buddyTweet, buddyPic);
+          }
+          else {
+            console.log('Error encoding image: ' + JSON.stringify(error));
+          }
+        });
         
-        postTweetPic(buddyTweet, picture);
-        console.log(buddyTweet + " || " + picture);
       }
-    } else {
-      console.log('Error!');
+    }
+    else {
+      console.log('Error getting dog data: ' + JSON.stringify(error));
     }
   });
-};
+}
 
-var postTweetPic = function(tweetText, tweetPic) {
-  twitter.uploadMedia({ media: tweetPic },
-  config.token,
-  config.token_secret,
-  function(error, data, response) {
+function postTweetText(tweetText) {
+  client.post('statuses/update', { status: tweetText }, function(error, tweet, response){
     if (!error) {
-      var img = data.media_id_string;
-      // console.log(response);
-      
-      twitter.statuses("update",
-      { status: tweetText, media_ids: img },
-      config.token,
-      config.token_secret,
-      function(error, data, response) {
+      console.log('Success: ' + tweet.text);
+    }
+    else {
+      console.log('Error posting tweet: ' + JSON.stringify(error));
+    }
+  });
+}
+
+function postTweetPic(tweetText, tweetPic) {
+  client.post('media/upload', { media_data: tweetPic }, function(error, media, response){
+    if (!error) {
+      var status = {
+        status: tweetText,
+        media_ids: media.media_id_string
+      };
+
+      client.post('statuses/update', status, function(error, tweet, response){
         if (!error) {
-          console.log(tweetText);
+          console.log(tweet.text);
         }
         else {
-          console.log(error);
+          console.log('Error posting tweet: ' + JSON.stringify(error));
         }
       });
     }
     else {
-      console.log(error);
+      console.log('Error uploading media: ' + JSON.stringify(error));
     }
   });
-};
-
-var postTweetText = function(tweetText) {
-  twitter.statuses("update",
-  { status: tweetText },
-  config.token,
-  config.token_secret,
-  function(error, data, response) {
-    if (!error) {
-      console.log(tweetText);
-    }
-    else {
-      console.log(error);
-    }
-  });
-};
+}
 
 function createTweet(dogData) {
   var name = formatName(dogData.name.$t),
@@ -133,27 +134,21 @@ function pickPic(photos) {
 }
 
 function formatName(petName) {
+  petName = petName.replace(/{.*?}/g, "")
+                   .replace(/\[.*?\]/g, "")
+                   .replace(/<.*?>/g, "")
+                   .replace(/\(.*?\)/g, "");
   if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
     petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi, '');
   }
   else if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) !== null) {
     petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#|\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
   }
+  petName = petName.replace(/    /gi, " ");
   petName = petName.replace(/   /gi, " ");
   petName = petName.replace(/  /gi, " ");
-  // Filter for formatting caps/lowercase letters in name, if desired. People are unpredictable, and more cases can be added as needed
-  // petName = petName.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  // petName = petName.replace(/ And /gi, function(i) { return i.toLowerCase(); });
-  // petName = petName.replace(/ Or /gi, function(j) { return j.toLowerCase(); });
-  // petName = petName.replace(/ Asap/gi, function(k) { return k.toUpperCase(); });
-  // petName = petName.replace(/ Aka /gi, function(l) { return l.toUpperCase(); });
-  // petName = petName.replace(/ Fka /gi, function(l) { return l.toUpperCase(); });
-  // petName = petName.replace(/ Bff /gi, " BFF ");
-  // petName = petName.replace(/ Bffs /gi, " BFFs ");
-  // petName = petName.replace(/\s+/g,' ').trim();
-  // if (petName.length === 2 && petName !== "Al" && petName !== "Bo") {
-  //   petName = petName.toUpperCase();
-  // }
+  petName = petName.trim();
+  
   return petName;
 }
 
