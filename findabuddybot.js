@@ -23,10 +23,10 @@ var getRequest = function() {
       if (Object.getOwnPropertyNames(dogData.media).length === 0) {
         postTweetText(buddyTweet);
         console.log(buddyTweet);
-      } else {
-        var picArray = dogData.media.photos.photo,
-            picture = pickPic(picArray);
-
+      }
+      else {
+        var picture = pickPic(dogData.media.photos.photo);
+        
         postTweetPic(buddyTweet, picture);
         console.log(buddyTweet + " || " + picture);
       }
@@ -37,12 +37,26 @@ var getRequest = function() {
 };
 
 var postTweetPic = function(tweetText, tweetPic) {
-  twitter.uploadMedia({media: tweetPic},
+  twitter.uploadMedia({ media: tweetPic },
   config.token,
   config.token_secret,
   function(error, data, response) {
     if (!error) {
-      console.log(response);
+      var img = data.media_id_string;
+      // console.log(response);
+      
+      twitter.statuses("update",
+      { status: tweetText, media_ids: img },
+      config.token,
+      config.token_secret,
+      function(error, data, response) {
+        if (!error) {
+          console.log(tweetText);
+        }
+        else {
+          console.log(error);
+        }
+      });
     }
     else {
       console.log(error);
@@ -160,7 +174,6 @@ function pickBreed(breed) {
     }
     breed = breedString;
   }
-
   if (singleBreed === true) {
     breed = breed.$t ? breed.$t : 'doggie';
   }
