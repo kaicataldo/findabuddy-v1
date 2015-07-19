@@ -37,7 +37,6 @@ function getRequest() {
             console.log('Error encoding image: ' + JSON.stringify(error));
           }
         });
-        
       }
     }
     else {
@@ -148,7 +147,7 @@ function formatName(petName) {
   petName = petName.replace(/   /gi, " ");
   petName = petName.replace(/  /gi, " ");
   petName = petName.trim();
-  
+
   return petName;
 }
 
