@@ -1,32 +1,32 @@
 Find-A-Buddy NYC
 ==========
 
-      ,:'/  _ ..._         ______ _           _          ____            _     _       
-     // ( `""-.._.'       |  ____(_)         | |   /\   |  _ \          | |   | |      
-     \| /    6\___        | |__   _ _ __   __| |  /  \  | |_) |_   _  __| | __| |_   _ 
+      ,:'/  _ ..._         ______ _           _          ____            _     _
+     // ( `""-.._.'       |  ____(_)         | |   /\   |  _ \          | |   | |
+     \| /    6\___        | |__   _ _ __   __| |  /  \  | |_) |_   _  __| | __| |_   _
      |     6      4       |  __| | | '_ \ / _` | / /\ \ |  _ <| | | |/ _` |/ _` | | | |
      |            /       | |    | | | | | (_| |/ ____ \| |_) | |_| | (_| | (_| | |_| |
      \_       .--'        |_|    |_|_| |_|\__,_/_/    \_\____/ \__,_|\__,_|\__,_|\__, |
      (_'---'`)                                                                    __/ |
-                                                                                 |___/ 
+                                                                                 |___/
 
 This app finds dogs in the NYC area, but could very easily be implemented in another city. To create your own Find-A-Buddy Twitterbot, all you need is your own Petfinder <a href="https://www.petfinder.com/developers/api-key">API key</a>, your own <a href="https://apps.twitter.com/">Twitter app auth credentials</a>, and a host (Find-A-Buddy NYC uses <a href="http://www.heroku.com">Heroku</a>).
 
-To plug the keys into your bot, create a file called config.js in the root directory (same directory as findabuddybot.js), copy and paste the code below, and fill in each empty slot with its respective key:
+To plug the keys into your bot, create a file called config.js in the root directory (same directory as findABuddyBot.js), copy and paste the code below, and fill in each empty slot with its respective key:
 
-     module.exports = {
-          consumer_key: ' ',
-       consumer_secret: ' ',
-                 token: ' ',
-          token_secret: ' ',
-         petfinder_key: ' '
-     };
+    export default {
+      consumer_key: ' ',
+      consumer_secret: ' ',
+      token: ' ',
+      token_secret: ' ',
+      petfinder_key: ' '
+    };
 
-To change the geographic region the app searches simply replace the location parameter (in this case, new%20york%20ny, but I believe it also accepts ZIP codes) with another location in the Petfinder URL variable in findabuddybot.js:
+To change the geographic region the app searches simply replace the location parameter (in this case, new%20york%20ny, but I believe it also accepts ZIP codes) with another location in the Petfinder URL variable in findABuddyBot.js:
 
-     url = 'http://api.petfinder.com/pet.find?key=' + petFinderKey + '&animal=dog&location=new%20york%20ny&count=1&offset=' + offset + '&output=full&format=json';
+     const url = `http://api.petfinder.com/pet.find?key=${petFinderKey}&animal=dog&location=new%20york%20ny&count=1&offset=${offset}&output=full&format=json`;
 
-Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam. Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.
+Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command (`npm start` in this case) at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam. Learn more about these guidelines <a href="https://dev.twitter.com/overview/terms/policy">here</a>.
 
 This project is dedicated to Henri (<a href='https://twitter.com/henri_thoughtz'>@henri_thoughtz</a>), who reminds you to please adopt instead of buying!
-    
+

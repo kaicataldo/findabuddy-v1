@@ -1,14 +1,15 @@
 {
   "name": "findabuddynyc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
   "engines": {
     "node": "0.12.x"
   },
   "scripts": {
-    "start": "node findabuddybot.js"
+    "start": "babel-node findABuddyBot.js"
   },
   "dependencies": {
+    "babel": "^5.8.21",
     "node-base64-image": "0.0.1",
     "request": "^2.55.0",
     "twitter": "^1.2.5"
@@ -18,5 +19,8 @@
     "url": "https://github.com/kaicataldo/findabuddynyc.git"
   },
   "author": "Kai Cataldo",
-  "license": "The MIT License (MIT)"
+  "license": "MIT",
+  "devDependencies": {
+    "jshint": "^2.8.0"
+  }
 }
