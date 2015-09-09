@@ -1,8 +1,10 @@
-import request from 'request';
-import base64 from 'node-base64-image';
-import createTweet from './createTweet';
-import postTweet from  './postTweet';
-import config from './config';
+'use strict';
+
+const request = require('request');
+const base64 = require('node-base64-image');
+const createTweet = require('./createTweet');
+const postTweet = require( './postTweet');
+const config = require('./config');
 
 let requestCounter = 0;
 
@@ -39,7 +41,7 @@ function findABuddy() {
       console.log('Error getting dog data: ' + JSON.stringify(error));
 
       if (requestCounter < 3) {
-        console.log('Attempt #' + (requestCounter + 1) + '');
+        console.log('Attempt #' + (requestCounter + 1));
         findABuddy();
       }
     }

@@ -3,15 +3,14 @@
   "version": "1.0.1",
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
   "engines": {
-    "node": "0.12.x"
+    "node": "^4.0.0"
   },
   "scripts": {
-    "start": "babel-node findABuddyBot.js"
+    "start": "node findABuddyBot.js"
   },
   "dependencies": {
-    "babel": "^5.8.21",
     "node-base64-image": "0.0.1",
-    "request": "^2.55.0",
+    "request": "^2.61.0",
     "twitter": "^1.2.5"
   },
   "repository": {

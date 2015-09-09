@@ -1,7 +1,4 @@
-export default function createTweet(dogData) {
-  formatTweet.setup(dogData);
-  return formatTweet.create();
-}
+'use strict';
 
 const formatTweet = {
   setup(dogData) {
@@ -136,3 +133,7 @@ const formatTweet = {
   }
 };
 
+module.exports = function(dogData) {
+  formatTweet.setup(dogData);
+  return formatTweet.create();
+};
