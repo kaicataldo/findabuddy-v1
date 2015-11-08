@@ -1,5 +1,5 @@
-const Twitter = require('twitter');
-const config = require('./config');
+import Twitter from 'twitter';
+import config from './config';
 
 const client = new Twitter({
   consumer_key: config.consumer_key,
@@ -8,7 +8,7 @@ const client = new Twitter({
   access_token_secret: config.token_secret
 });
 
-module.exports = {
+export default {
   text(tweetText) {
     client.post('statuses/update', { status: tweetText }, (error, tweet, response) => {
       if (!error) {

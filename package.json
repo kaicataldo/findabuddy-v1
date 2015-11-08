@@ -1,12 +1,11 @@
 {
   "name": "findabuddynyc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
-  "engines": {
-    "node": "^4.0.0"
-  },
   "scripts": {
-    "start": "node findABuddyBot.js"
+    "start": "node dist/findABuddyBot.js",
+    "build": "node_modules/.bin/babel ./src --out-dir ./dist",
+    "dev": "node_modules/.bin/babel ./src --watch --out-dir ./dist"
   },
   "dependencies": {
     "node-base64-image": "0.0.1",
@@ -20,6 +19,9 @@
   "author": "Kai Cataldo",
   "license": "MIT",
   "devDependencies": {
-    "jshint": "^2.8.0"
+    "babel-cli": "^6.1.2",
+    "babel-eslint": "^4.1.4",
+    "babel-preset-es2015": "^6.1.2",
+    "eslint": "^1.9.0"
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 const formatTweet = {
   setup(dogData) {
     this.oneDoggie = '';
@@ -16,7 +14,7 @@ const formatTweet = {
     const endPhrase = this.endOfSentence(this.oneDoggie);
     const petFinderUrl = this.link;
     const buddyTweet = {
-      text: startPhrase + endPhrase + " " + petFinderUrl,
+      text: startPhrase + endPhrase + ' ' + petFinderUrl,
       img: this.imgUrl
     };
 
@@ -29,16 +27,16 @@ const formatTweet = {
     if (name.indexOf('&') > -1 || name.indexOf(' and ') > -1) {
       if (name.indexOf('-') > -1 || name.indexOf('~') > -1 || name.indexOf('(') > -1 && name.indexOf(')') > -1) {
         this.oneDoggie = true;
-        startPhrase = name + " is a " + sex + " " + breed + mix;
+        startPhrase = name + ' is a ' + sex + ' ' + breed + mix;
       }
       else {
         this.oneDoggie = false;
-        startPhrase = name + " are doggies";
+        startPhrase = name + ' are doggies';
       }
     }
     else {
       this.oneDoggie = true;
-      startPhrase = name + " is a " + sex + " " + breed + mix;
+      startPhrase = name + ' is a ' + sex + ' ' + breed + mix;
     }
     return startPhrase;
   },
@@ -47,7 +45,7 @@ const formatTweet = {
     let phrases = [];
     let endPhrase = '';
 
-    if (this.oneDoggie) {
+    if (oneDoggie) {
       phrases = [' who needs a loving home!', ' looking for a new family!', ' looking for a furever home!', ' who needs a new best friend!', ' who needs a place to call home!', ' looking for a forever home!', ' who wants to be your buddy!', ' looking for a loving family!', ' in need of love!', ' in need of a loving home!', ' looking for a new home!', ' who needs some lovin\'!', ' who could be your new buddy!'];
     }
     else {
@@ -69,10 +67,10 @@ const formatTweet = {
 
   formatName(petName) {
     petName = petName
-              .replace(/{.*?}/g, "")
-              .replace(/\[.*?\]/g, "")
-              .replace(/<.*?>/g, "")
-              .replace(/\(.*?\)/g, "");
+              .replace(/{.*?}/g, '')
+              .replace(/\[.*?\]/g, '')
+              .replace(/<.*?>/g, '')
+              .replace(/\(.*?\)/g, '');
 
     if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
       petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi, '');
@@ -81,9 +79,7 @@ const formatTweet = {
       petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#|\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
     }
 
-    petName = petName.replace(/    /gi, " ");
-    petName = petName.replace(/   /gi, " ");
-    petName = petName.replace(/  /gi, " ");
+    petName = petName.replace(/\s\s+/g, ' ');
     petName = petName.trim();
 
     return petName;
@@ -111,29 +107,29 @@ const formatTweet = {
   },
 
   link(idNumber) {
-    return "http://www.petfinder.com/petdetail/" + idNumber;
+    return `http://www.petfinder.com/petdetail/${idNumber}`;
   },
 
   whichSex(sex) {
     if (sex === 'F') {
-      return "female";
+      return 'female';
     }
     else {
-      return "male";
+      return 'male';
     }
   },
 
   whichMix(isMix, breed) {
     if (isMix === 'yes' && breed !== 'doggie') {
-      return " mix";
+      return ' mix';
     }
     else {
-      return "";
+      return '';
     }
   }
 };
 
-module.exports = function(dogData) {
+export default function(dogData) {
   formatTweet.setup(dogData);
   return formatTweet.create();
-};
+}
