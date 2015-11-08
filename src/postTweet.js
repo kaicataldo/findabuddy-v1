@@ -23,7 +23,7 @@ export default {
   image(tweetText, tweetImg) {
     client.post('media/upload', { media_data: tweetImg }, (error, media, response) => {
       if (!error) {
-        var status = {
+        const status = {
           status: tweetText,
           media_ids: media.media_id_string
         };
