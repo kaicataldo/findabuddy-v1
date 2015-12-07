@@ -1,6 +1,6 @@
 {
   "name": "findabuddynyc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
   "scripts": {
     "start": "node dist/findABuddyBot.js",

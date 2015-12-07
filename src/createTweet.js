@@ -41,6 +41,7 @@ function beginningOfSentence(dogAttrs) {
     dogAttrs.oneDoggie = true;
     startPhrase = name + ' is a ' + sex + ' ' + breed + mix;
   }
+
   return [startPhrase, dogAttrs];
 }
 
@@ -65,15 +66,12 @@ function pickImg(photos) {
       return photo.$t;
     }
   }
+
   return false; // if no large img, buddyTweet.img is false
 }
 
 function formatName(petName) {
-  petName = petName
-            .replace(/{.*?}/g, '')
-            .replace(/\[.*?\]/g, '')
-            .replace(/<.*?>/g, '')
-            .replace(/\(.*?\)/g, '');
+  petName = petName.replace(/{.*?}|\[.*?\]|<.*?>|\(.*?\)/g, '');
 
   if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
     petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi, '');
@@ -84,7 +82,6 @@ function formatName(petName) {
 
   petName = petName.replace(/\s\s+/g, ' ');
   petName = petName.trim();
-
   return petName;
 }
 
@@ -98,14 +95,17 @@ function pickBreed(breed) {
     for (let i = 0; i < breed.length; i++) {
       if (i === breed.length - 1) {
         breedString += breed[i].$t;
-      } else {
+      }
+      else {
         breedString += breed[i].$t + '/';
       }
     }
   }
+
   if (singleBreed) {
     breedString = breed.$t ? breed.$t : 'doggie';
   }
+
   return breedString;
 }
 

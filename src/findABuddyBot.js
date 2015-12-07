@@ -1,5 +1,5 @@
 import request from 'request';
-import base64 from 'node-base64-image';
+import { base64encoder } from 'node-base64-image';
 import createTweet from './createTweet';
 import postTweet from './postTweet';
 import config from './config';
@@ -22,7 +22,7 @@ function findABuddy() {
       const buddyTweet = createTweet(dogData);
 
       if (buddyTweet.img) {
-        base64.base64encoder(buddyTweet.img, { string: true }, (error, buddyImg) => {
+        base64encoder(buddyTweet.img, { string: true }, (error, buddyImg) => {
           if (!error) {
             postTweet.image(buddyTweet.text, buddyImg);
           }
