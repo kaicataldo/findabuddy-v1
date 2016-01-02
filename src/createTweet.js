@@ -67,20 +67,21 @@ function pickImg(photos) {
     }
   }
 
-  return false; // if no large img, buddyTweet.img is false
+  return false; // return false if no large image found
 }
 
 function formatName(petName) {
   petName = petName.replace(/{.*?}|\[.*?\]|<.*?>|\(.*?\)/g, '');
 
-  if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) === null) {
+  if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi) !== null) {
     petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|zzz|[0-9]|#/gi, '');
-  }
-  else if (petName.match(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#/gi) !== null && petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) !== null) {
-    petName = petName.replace(/zzcourtesy|zzzcourtesy|zz courtesy|zzz courtesy|coutesy|courtesy|listing|posting|post|dob |zzz|[0-9]|#|\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
+
+    if (petName.match(/\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi) !== null) {
+      petName = petName.replace(/dob |\/|[(]|[)]|[\[\]]|-|–|—|[*]/gi, '');
+    }
   }
 
-  petName = petName.replace(/\s\s+/g, ' ');
+  petName = petName.replace(/\s{2,}/g, ' ');
   petName = petName.trim();
   return petName;
 }

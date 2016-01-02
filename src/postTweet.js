@@ -15,7 +15,7 @@ export default {
         console.log('Success: ' + tweet.text);
       }
       else {
-        console.log('Error posting tweet: ' + JSON.stringify(error));
+        console.error('Error posting tweet: ' + JSON.stringify(error));
       }
     });
   },
@@ -33,12 +33,12 @@ export default {
             console.log(tweet.text);
           }
           else {
-            console.log('Error posting tweet: ' + JSON.stringify(error));
+            console.error('Error posting tweet: ' + JSON.stringify(error));
           }
         });
       }
       else {
-        console.log('Error uploading media: ' + JSON.stringify(error));
+        console.error('Error uploading media: ' + JSON.stringify(error));
       }
     });
   }

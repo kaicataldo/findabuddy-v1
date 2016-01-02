@@ -6,9 +6,7 @@ import config from './config';
 
 let requestCounter = 0;
 
-findABuddy();
-
-function findABuddy() {
+(function findABuddy() {
   const petFinderKey = config.petfinder_key;
   const offset = Math.round(Math.random() * 1999);
   const url = `http://api.petfinder.com/pet.find?key=${petFinderKey}&animal=dog&location=new%20york%20ny&count=1&offset=${offset}&output=full&format=json`;
@@ -27,7 +25,7 @@ function findABuddy() {
             postTweet.image(buddyTweet.text, buddyImg);
           }
           else {
-            console.log('Error encoding image: ' + JSON.stringify(error));
+            console.error('Error encoding image: ' + JSON.stringify(error));
           }
         });
       }
@@ -36,12 +34,12 @@ function findABuddy() {
       }
     }
     else {
-      console.log('Error getting dog data: ' + JSON.stringify(error));
+      console.error('Error getting dog data: ' + JSON.stringify(error));
 
       if (requestCounter < 3) {
-        console.log('Attempt #' + (requestCounter + 1));
+        console.error('Attempt #' + (requestCounter + 1));
         findABuddy();
       }
     }
   });
-}
+})();
