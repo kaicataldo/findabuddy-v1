@@ -7,9 +7,9 @@ import config from './config';
 let requestCounter = 0;
 
 (function findABuddy() {
-  const petFinderKey = config.petfinder_key;
+  const { location, petfinder_key: key } = config;
   const offset = Math.round(Math.random() * 1999);
-  const url = `http://api.petfinder.com/pet.find?key=${petFinderKey}&animal=dog&location=new%20york%20ny&count=1&offset=${offset}&output=full&format=json`;
+  const url = `http://api.petfinder.com/pet.find?key=${key}&animal=dog&location=${location}&count=1&offset=${offset}&output=full&format=json`;
 
   request(url, (error, response, body) => {
     requestCounter++;

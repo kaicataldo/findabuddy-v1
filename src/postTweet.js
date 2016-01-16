@@ -4,7 +4,7 @@ import config from './config';
 const client = new Twitter({
   consumer_key: config.consumer_key,
   consumer_secret: config.consumer_secret,
-  access_token_key: config.token,
+  access_token_key: config.token_key,
   access_token_secret: config.token_secret
 });
 
@@ -12,7 +12,7 @@ export default {
   text(tweetText) {
     client.post('statuses/update', { status: tweetText }, (error, tweet, response) => {
       if (!error) {
-        console.log('Success: ' + tweet.text);
+        console.log(response);
       }
       else {
         console.error('Error posting tweet: ' + JSON.stringify(error));
@@ -30,7 +30,7 @@ export default {
 
         client.post('statuses/update', status, (error, tweet, response) => {
           if (!error) {
-            console.log(tweet.text);
+            console.log(response);
           }
           else {
             console.error('Error posting tweet: ' + JSON.stringify(error));
