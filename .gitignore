@@ -1,4 +1,2 @@
-dist/
-src/config.js
-npm-debug.log
+lib/config.js
 node_modules/
