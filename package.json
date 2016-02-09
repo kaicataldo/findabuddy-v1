@@ -4,7 +4,8 @@
   "version": "1.0.3",
   "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
   "scripts": {
-    "start": "node bin/findabuddy"
+    "start": "node bin/findabuddy",
+    "lint": "eslint ."
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
@@ -15,8 +16,8 @@
     "twitter": "^1.2.5"
   },
   "devDependencies": {
-    "babel-eslint": "^5.0.0-beta6",
-    "eslint": "^1.9.0"
+    "eslint": "^2.0.0-rc.1",
+    "eslint-plugin-promise": "^1.0.8"
   },
   "repository": {
     "type": "git",
