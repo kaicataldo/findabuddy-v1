@@ -1,8 +1,8 @@
 {
-  "name": "findabuddynyc",
+  "name": "findabuddy",
   "author": "Kai Cataldo",
   "version": "1.0.3",
-  "description": "Find-A-Buddy NYC tweets local listing of dogs in need of a home in NYC!",
+  "description": "Find-A-Buddy tweets local listing of dogs in need of a home",
   "scripts": {
     "start": "node bin/findabuddy",
     "lint": "eslint ."
@@ -21,6 +21,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kaicataldo/findabuddynyc.git"
+    "url": "https://github.com/kaicataldo/findabuddy.git"
   }
 }
