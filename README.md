@@ -26,4 +26,4 @@ export default {
 
 Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command (`npm start` in this case) at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam. Learn more about these guidelines [here](https://dev.twitter.com/overview/terms/policy).
 
-This project is dedicated to Henri ([@henri_thoughtz](https://twitter.com/henri_thoughtz)), who reminds you to please adopt instead of buying!
+This project is dedicated to [Henri](https://www.instagram.com/henrisnuggles/), who reminds you to please adopt instead of buying!
