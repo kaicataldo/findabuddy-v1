@@ -1,23 +1,39 @@
 {
   "name": "findabuddy",
   "author": "Kai Cataldo",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Find-A-Buddy tweets local listing of dogs in need of a home",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaicataldo/findabuddy.git"
+  },
   "scripts": {
     "start": "node bin/findabuddy",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier --write '**/*.js'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
-    "node-base64-image": "0.0.1",
+    "node-base64-image": "^1.0.6",
     "request": "^2.61.0",
     "twitter": "^1.2.5"
   },
   "devDependencies": {
-    "eslint": "^2.0.0-rc.1",
-    "eslint-plugin-promise": "^1.0.8"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kaicataldo/findabuddy.git"
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-node": "^9.1.0",
+    "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.18.2"
   }
 }
