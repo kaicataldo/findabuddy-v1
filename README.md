@@ -9,20 +9,17 @@ Find-A-Buddy
      \_       .--'        |_|    |_|_| |_|\__,_/_/    \_\____/ \__,_|\__,_|\__,_|\__, |
      (_'---'`)                                                                    __/ |
                                                                                  |___/
-One of my first projects, Find-A-Buddy is a Twitterbot that uses the PetFinder API to tweet listings of adoptable dogs in a given geographic area. To create your own Find-A-Buddy Twitterbot, all you need is your own [Petfinder API key](https://www.petfinder.com/developers/api-key), your own [Twitter app auth credentials](https://apps.twitter.com/), and a host ([Find-A-Buddy NYC](https://twitter.com/findabuddynyc) uses [Heroku](http://www.heroku.com)).
+One of my first projects, Find-A-Buddy is a Twitter bot that uses the PetFinder API to tweet listings of adoptable dogs in a given geographic area. To create your own Find-A-Buddy Twitterbot, all you need is your own [Petfinder API key](https://www.petfinder.com/developers/api-key), your own [Twitter app auth credentials](https://apps.twitter.com/), and a host ([Find-A-Buddy NYC](https://twitter.com/findabuddynyc) uses [Heroku](http://www.heroku.com)).
 
-A config.js file containing the aforementioned credentials as well as a location field (can either be the in the format of city, state - i.e. `'New York, NY'` - or a ZIP code) is required in the root directory in order to run the bot. This config file should look like this (with your respective values filled in):
+Find-A-Buddy expects the following environmen variables to be set:
 
-```js
-export default {
-  consumer_key: string,
-  consumer_secret: string,
-  token: string,
-  token_secret: string,
-  petfinder_key: string,
-  location: string
-};
-```
+* `CONSUMER_KEY`: Twitter consumer API key
+* `CONSUMER_SECRET`: Twitter consumer API secret key
+* `TOKEN_KEY`: Twitter access token
+* `TOKEN_SECRET`: Twitter access token secret
+* `PETFINDER_KEY`: Petfinder API key (secret key is not needed)
+* `LOCATION`: location to search (can either be the in the format of city, state - i.e. 'New York, NY' - or a ZIP code)
+
 
 Lastly, you'll need to find something that runs the script at a regular interval. I used the Heroku Scheduler add-on, which runs a node command (`npm start` in this case) at whatever interval you specify. Do be careful with this - Twitter has guidelines about what they think consitutes spam. Learn more about these guidelines [here](https://dev.twitter.com/overview/terms/policy).
 
