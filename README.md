@@ -9,9 +9,9 @@ Find-A-Buddy
      \_       .--'        |_|    |_|_| |_|\__,_/_/    \_\____/ \__,_|\__,_|\__,_|\__, |
      (_'---'`)                                                                    __/ |
                                                                                  |___/
-One of my first projects, Find-A-Buddy is a Twitter bot that uses the PetFinder API to tweet listings of adoptable dogs in a given geographic area. To create your own Find-A-Buddy Twitterbot, all you need is your own [Petfinder API key](https://www.petfinder.com/developers/api-key), your own [Twitter app auth credentials](https://apps.twitter.com/), and a host ([Find-A-Buddy NYC](https://twitter.com/findabuddynyc) uses [Heroku](http://www.heroku.com)).
+One of my first projects, Find-A-Buddy is a Twitter bot that uses the PetFinder API to tweet listings of adoptable dogs in a given geographic area. To create your own Find-A-Buddy Twitter bot, all you need is your own [Petfinder API key](https://www.petfinder.com/developers/api-key), your own [Twitter app auth credentials](https://apps.twitter.com/), and a host ([Find-A-Buddy NYC](https://twitter.com/findabuddynyc) uses [Heroku](http://www.heroku.com)).
 
-Find-A-Buddy expects the following environmen variables to be set:
+Find-A-Buddy expects the following environment variables to be set:
 
 * `CONSUMER_KEY`: Twitter consumer API key
 * `CONSUMER_SECRET`: Twitter consumer API secret key
