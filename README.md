@@ -1,6 +1,8 @@
 Find-A-Buddy
 ==========
 
+**DEPRECATED: Petfinder has released a newer version of their API since this was first written and it no longer works. New, working version can be found [here](https://github.com/kaicataldo/findabuddy).**
+
       ,:'/  _ ..._         ______ _           _                    ____            _     _
      // ( `""-.._.'       |  ____(_)         | |        /\        |  _ \          | |   | |
      \| /    6\___        | |__   _ _ __   __| |______ /  \ ______| |_) |_   _  __| | __| |_   _
